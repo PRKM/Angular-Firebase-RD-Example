@@ -1,0 +1,29 @@
+<h2>User list</h2>
+<button type="button" (click)="setAddMode()">사용자 추가</button>
+<ul class="heroes">
+  <li *ngFor="let user of users | async"
+    [class.selected]="user === selectedUser"
+    (click)="onSelect(user)">
+    <span class="badge">{{user.age}}</span> {{user.name}}
+    <button type="button" (click)="deleteUser(user.key); $event.stopPropagation();">삭제</button>
+  </li>
+</ul>
+ 
+<div *ngIf="selectedUser">
+  <h2 *ngIf="updateMode">{{selectedUser.name | uppercase}} Details</h2>
+  <h2 *ngIf="!updateMode">Add User</h2>
+  <div>
+    <label>name:
+      <input [(ngModel)]="selectedUser.name" placeholder="name" [readonly]="updateMode">
+    </label>
+  </div>
+  <div>
+    <label>age:
+      <input [(ngModel)]="selectedUser.age" placeholder="age" type="number">
+    </label>
+  </div>
+  <button *ngIf="updateMode" type="button" (click)="updateUser(selectedUser.key)">수정</button>
+  <button *ngIf="!updateMode" type="button" (click)="addUser()">추가</button>
+</div>
+
+<!--앵귤러 공식 튜토리얼 템플릿 활용-->
